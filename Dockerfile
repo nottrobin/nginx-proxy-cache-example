@@ -1,11 +1,13 @@
 FROM ubuntu:xenial
 
-RUN apt-get update && apt-get install --yes nginx
+RUN apt-get update && apt-get install --yes nginx python3
 
 # Copy over files
+WORKDIR /srv
+ADD time_wsgi.py .
 ADD nginx.conf /etc/nginx/sites-enabled/default
 
 STOPSIGNAL SIGTERM
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ./time_wsgi.py & nginx -g "daemon off;"
 

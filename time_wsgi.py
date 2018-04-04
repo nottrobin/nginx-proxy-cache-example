@@ -10,8 +10,8 @@ def application(env, start_response):
     """
 
     start_response(
-#        status="200 OK",
-        status="500 Internal Server Error",
+        status="200 OK",
+#        status="500 Internal Server Error",
         headers=[
             ('Content-Type', 'text/plain'),
             (
