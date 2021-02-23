@@ -1,6 +1,6 @@
-FROM ubuntu:xenial
+FROM ubuntu
 
-RUN apt-get update && apt-get install --yes nginx python3
+RUN apt-get update && apt-get install --yes nginx python3 gunicorn
 
 # Copy over files
 WORKDIR /srv
@@ -9,5 +9,4 @@ ADD nginx.conf /etc/nginx/sites-enabled/default
 
 STOPSIGNAL SIGTERM
 
-CMD ./time_wsgi.py & nginx -g "daemon off;"
-
+CMD gunicorn -b 0.0.0.0:7999 -w 5 time_wsgi:application & nginx -g "daemon off;"
